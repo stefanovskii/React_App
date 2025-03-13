@@ -1,15 +1,17 @@
 import { useQuery } from '@apollo/client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GET_ALL_CHARACTERS } from './query';
 import Card from './Card';
 import './App.css';
 import LanguageSelector from './Language-selector';
+import Pagination from './Pagination';
 
 const App = () => {
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState('');
   const [species, setSpecies] = useState('');
   const [sortBy, setSortBy] = useState('');
+  const [totalPages, setTotalPages] = useState(1);
 
   const { loading, error, data } = useQuery(GET_ALL_CHARACTERS, {
     variables: {
@@ -19,14 +21,20 @@ const App = () => {
     }
   });
 
+  useEffect(() => {
+    if (data?.characters?.info?.pages) {
+      setTotalPages(data.characters.info.pages);
+    }
+  }, [data]);
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error {error.message}</p>;
 
   const sortedCharacters = [...data.characters.results].sort((a, b) => {
     if (sortBy === 'name') return a.name.localeCompare(b.name);
     if (sortBy === 'origin') {
-      const originA = a.origin?.name || ''; 
-      const originB = b.origin?.name || ''; 
+      const originA = a.origin?.name || '';
+      const originB = b.origin?.name || '';
       return originA.localeCompare(originB);
     }
     return 0;
@@ -72,8 +80,9 @@ const App = () => {
           <Card character={character} key={character.id} />
         ))}
       </div>
+      <Pagination totalPages={totalPages} page={page} setPage={setPage} />
       <div>
-        <LanguageSelector/>
+        <LanguageSelector />
       </div>
     </>
   );

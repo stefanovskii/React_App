@@ -1,8 +1,8 @@
-.row{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: center;
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
 }
 
 .filters {
@@ -65,4 +65,53 @@
 .lang-btn.active {
   background-color: #007BFF;
   color: white;
+}
+
+.pagination-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination .page-item {
+  display: inline-block;
+}
+
+.pagination .page-link {
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  color: #007bff;
+  border: 1px solid #007bff;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.pagination .active .page-link {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination .btn {
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  cursor: pointer;
+}
+
+.pagination .btn-primary {
+  background-color: transparent;
+  border: 1px solid #007bff;
+  color: #007bff;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+}
+
+.break {
+  display: inline;
+}
+
+.btn-primary {
+  display: inline;
 }
