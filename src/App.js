@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { GET_ALL_CHARACTERS } from './query';
 import Card from './Card';
 import './App.css';
+import LanguageSelector from './Language-selector';
 
 const App = () => {
   const [page, setPage] = useState(1);
@@ -70,6 +71,9 @@ const App = () => {
         {sortedCharacters.map((character) => (
           <Card character={character} key={character.id} />
         ))}
+      </div>
+      <div>
+        <LanguageSelector/>
       </div>
     </>
   );
