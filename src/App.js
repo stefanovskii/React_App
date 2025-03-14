@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { GET_ALL_CHARACTERS } from './query';
-import Card from './Card';
+import Card from './components/Card/Card';
 import './App.css';
-import LanguageSelector from './Language-selector';
-import Pagination from './Pagination';
+import Footer from './components/Footer/Footer';
+import Pagination from './components/Pagination/Pagination';
 
 const App = () => {
   const [page, setPage] = useState(1);
@@ -13,7 +13,7 @@ const App = () => {
   const [sortBy, setSortBy] = useState('');
   const [totalPages, setTotalPages] = useState(1);
 
-  const { loading, error, data } = useQuery(GET_ALL_CHARACTERS, {
+  const { loading, error, data, fetchMore } = useQuery(GET_ALL_CHARACTERS, {
     variables: {
       page,
       status: status || null,
@@ -26,6 +26,34 @@ const App = () => {
       setTotalPages(data.characters.info.pages);
     }
   }, [data]);
+
+  // INFINITE SCROLL - the elements get duplicated
+
+  // const observer = useRef()
+  // const lastPicElementRef = useCallback(node => {
+  //   if (loading) return;
+  //   if (observer.current) observer.current.disconnect();
+
+  //   observer.current = new IntersectionObserver(entries => {
+  //     if (entries[0].isIntersecting && page < totalPages) {
+  //       setPage(prevPageNumber => prevPageNumber + 1);
+  //       fetchMore({
+  //         variables: { page: page + 1 },
+  //         updateQuery: (prevResult, { fetchMoreResult }) => {
+  //           if (!fetchMoreResult) return prevResult;
+  //           return {
+  //             characters: {
+  //               ...fetchMoreResult.characters,
+  //               results: [...prevResult.characters.results, ...fetchMoreResult.characters.results]
+  //             }
+  //           };
+  //         }
+  //       });
+  //     }
+  //   });
+
+  //   if (node) observer.current.observe(node);
+  // }, [loading, totalPages, fetchMore]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error {error.message}</p>;
@@ -44,7 +72,7 @@ const App = () => {
   return (
     <>
       <header>
-        <h1 className="text-center m-5">Rick and Morty GraphQL App</h1>
+        <h1 className="title">Rick and Morty GraphQL App</h1>
         <div className="filters">
           <select className="filter-dropdown" onChange={(e) => setStatus(e.target.value)} value={status}>
             <option value="">All Status</option>
@@ -76,13 +104,18 @@ const App = () => {
       </header>
 
       <div className="row">
-        {sortedCharacters.map((character) => (
-          <Card character={character} key={character.id} />
-        ))}
+        {sortedCharacters.map((character, index) => {
+          // if(index === sortedCharacters.length - 1){
+          //   return <div ref={lastPicElementRef} key={character.id}><Card character={character}/></div>
+          // }
+          return <Card character={character} key={character.id} />
+        })}
       </div>
-      <Pagination totalPages={totalPages} page={page} setPage={setPage} />
+      {<Pagination totalPages={totalPages} page={page} setPage={setPage} />}
+      {/* <div>{loading && 'Loading...'}</div>
+      <div>{error && 'Error'}</div> */}
       <div>
-        <LanguageSelector />
+        <Footer />
       </div>
     </>
   );

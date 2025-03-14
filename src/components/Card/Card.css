@@ -1,0 +1,18 @@
+.card {
+    text-align: center;
+    padding: 15px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .card h5 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #343a40;
+  }
+  
+  .card h6 {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #6c757d;
+  }
+  

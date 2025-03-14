@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next';
+import "./Card.css";
 
 const Card = ({ character }) => {
 const { t } = useTranslation()
 
   return (
-    <div>
+    <div className="card">
       <img src={character.image} alt={character.name} />
       <div>
         <h5>{character.name}</h5>

@@ -35,6 +35,8 @@ const Pagination = ({ totalPages, page, setPage }) => {
         </div>
     );
 
+    // Pagination only with prev and next
+    
     //   var next = () => {
     //     setPage((x) => x+1);
     //   };

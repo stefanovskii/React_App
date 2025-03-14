@@ -1,3 +1,7 @@
+.title{
+  text-align: center;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -115,3 +119,4 @@
 .btn-primary {
   display: inline;
 }
+

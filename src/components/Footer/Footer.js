@@ -6,7 +6,7 @@ const languages = [
     {code: "de", lang: "Deutsch"}
 ];
 
-const LanguageSelector = () => {
+const Footer = () => {
     const {i18n} = useTranslation();
     const currentLanguage = i18n.language;
 
@@ -22,4 +22,4 @@ const LanguageSelector = () => {
       );
 }
 
-export default LanguageSelector;
+export default Footer;
